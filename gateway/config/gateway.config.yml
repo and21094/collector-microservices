@@ -6,12 +6,19 @@ admin:
 apiEndpoints:
   hello:
     host: localhost
-    paths: 
+    paths:
       - '/hello'
       - '/hello/*'
+  auth:
+    host: localhost
+    paths:
+      - '/auth'
+      - '/auth/*'
 serviceEndpoints:
   hello-service:
     url: 'http://localhost:3080'
+  auth-service:
+    url: 'http://localhost:5001'
 policies:
   - basic-auth
   - cors
@@ -31,4 +38,12 @@ pipelines:
           - action:
               serviceEndpoint: hello-service
               changeOrigin: true
-  
+  - name: auth
+    apiEndpoints:
+      - auth
+    policies:
+      # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: auth-service
+              changeOrigin: true
