@@ -17,9 +17,9 @@ var login = async (req, res) => {
     }
 
     const token = await tokenService.signToken({ userId: 21 })
-    message = { result: true, token }
+    const message = { result: true, token }
 
-    res.status(500).send(message);
+    res.json(message);
 }
 
 module.exports = {
