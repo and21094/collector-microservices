@@ -9,5 +9,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^7.3.0"
+  }
 }

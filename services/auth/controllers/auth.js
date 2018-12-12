@@ -2,6 +2,7 @@
 
 const tokenService = require('../services/token')
 const utils = require('../lib/utils')
+const boom = require('boom');
 
 /**
  * Login
@@ -9,14 +10,16 @@ const utils = require('../lib/utils')
  * @param {*} res
  */
 var login = async (req, res) => {
-    const data = req.body
+    const data = await req.body
 
-    if (data.password === '12345678') {
-        const token = await tokenService.signToken({ userId: 21 })
-        res.status(200).send({ message: 'nois', token });
+    if (data.password !== '12345678') {
+        throw boom.badRequest('invalid password')
     }
 
-    res.status(500).send({ message: 'wrong user or password' });
+    const token = await tokenService.signToken({ userId: 21 })
+    message = { result: true, token }
+
+    res.status(500).send(message);
 }
 
 module.exports = {
