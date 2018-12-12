@@ -26,7 +26,7 @@ module.exports.verifyToken = async function verifyToken(
 ) {
     return new Promise((resolve, reject) => {
         jwt.verify(token, secret, options, (err, decoded) => {
-            if (err) return reject(`err`, err)
+            if (err) return reject(`Invalid Token`, err)
 
             return resolve(decoded)
         })
