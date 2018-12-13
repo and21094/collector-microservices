@@ -3,6 +3,7 @@
 const tokenService = require('../services/token')
 const utils = require('../lib/utils')
 const boom = require('boom');
+const Db = require('j4db-controller')
 
 /**
  * Login
@@ -39,6 +40,7 @@ var login = async (req, res) => {
  * @param {*} res
  */
 var signup = async (req, res) => {
+    const db = new Db()
     const data = req.body
 
     // TODO validate data
@@ -46,9 +48,13 @@ var signup = async (req, res) => {
         throw boom.badRequest('Invalid Data');
     }
 
-    // TODO create user
+    const user = await db.users.save(data)
 
-    res.json({ result: true, message: 'signup done' });
+    console.log('user', user)
+
+    if (user.result) {
+        res.json({ result: true, message: 'signup done' });
+    }
 }
 
 /**
