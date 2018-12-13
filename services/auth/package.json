@@ -17,6 +17,7 @@
     "standard-error": "^1.1.0",
     "token-extractor": "^0.1.6",
     "utf8": "^3.0.0",
-    "j4db-controller": "../../../j4db-controller"
+    "j4db-controller": "../../../j4db-controller",
+    "boom": "^7.3.0"
   }
 }

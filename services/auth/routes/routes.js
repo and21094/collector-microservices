@@ -16,5 +16,7 @@ const asyncMiddleware = fn => (req, res, next) => {
 
 // API Routes
 app.post('/login', asyncMiddleware(controller.login));
+app.post('/signup',  asyncMiddleware(controller.signup));
+app.post('/resetPassword',  asyncMiddleware(controller.resetPassword));
 
 module.exports = app;
