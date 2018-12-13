@@ -4,6 +4,7 @@ const tokenService = require('../services/token')
 const utils = require('../lib/utils')
 const boom = require('boom');
 const Db = require('j4db-controller')
+const StandardError = require('standard-error')
 
 /**
  * Login
@@ -43,17 +44,19 @@ var signup = async (req, res) => {
     const db = new Db()
     const data = req.body
 
-    // TODO validate data
-    if (!data.name || !data.email || !data.phone) {
-        throw boom.badRequest('Invalid Data');
-    }
+    try {
+        if (!data.name || !data.email || !data.phone) {
+            throw new Error('Data information is missing')
+        }
 
-    const user = await db.users.save(data)
+        const user = await db.users.save(data)
 
-    console.log('user', user)
-
-    if (user.result) {
         res.json({ result: true, message: 'signup done' });
+    } catch (err) {
+        throw new StandardError(err.message, {
+            code: err.errorCode || 'E_UNKNOWN_ERROR',
+            originalStack: err.stack || null,
+        })
     }
 }
 
@@ -64,7 +67,7 @@ var signup = async (req, res) => {
  */
 var resetPassword = async (req, res) => {
     const data = req.body
-    const encoded = await  tokenService.verifyToken(data.token)
+    const encoded = await tokenService.verifyToken(data.token)
 
     if (encoded && parseInt(data.userId, 10) !== encoded.userId) {
         throw boom.unauthorized('Invalid user')
