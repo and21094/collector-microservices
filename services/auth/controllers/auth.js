@@ -42,7 +42,7 @@ var signup = async (req, res) => {
     const data = req.body
 
     // TODO validate data
-    if (!data.name || !data.email || !data.password) {
+    if (!data.name || !data.email || !data.phone) {
         throw boom.badRequest('Invalid Data');
     }
 
