@@ -45,13 +45,13 @@ var signup = async (req, res) => {
     const data = req.body
 
     try {
-        if (!data.name || !data.email || !data.phone) {
+        if (!data.name || !data.email || !data.password) {
             throw new Error('Data information is missing')
         }
 
         const user = await db.users.save(data)
-
         res.json({ result: true, message: 'signup done' });
+
     } catch (err) {
         throw new StandardError(err.message, {
             code: err.errorCode || 'E_UNKNOWN_ERROR',
